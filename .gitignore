@@ -32,6 +32,17 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.local.example
+
+# Ai 
+.claude
+/claude
+
+# Guides
+Project_brief.md
+
+# Database
+/supabase
 
 # vercel
 .vercel
