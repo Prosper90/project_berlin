@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { formatDate } from '@/lib/utils';
 import Button from '@/components/ui/Button';
+import NotificationToggle from '@/components/dashboard/NotificationToggle';
 import { Event } from '@/types';
 
 export const metadata: Metadata = { title: 'Dashboard' };
@@ -82,16 +83,7 @@ export default async function DashboardPage() {
       {/* Notification preference */}
       <section className="mt-10 rounded-lg border border-border bg-surface p-6">
         <h2 className="text-base font-semibold text-white">Email Notifications</h2>
-        <p className="mt-1 text-sm text-muted">
-          {profile?.notification_opt_in
-            ? 'You are subscribed to event alerts.'
-            : 'You are not subscribed to event alerts.'}
-        </p>
-        <form action="/api/notifications" method="POST" className="mt-3">
-          <Button size="sm" variant="secondary" type="submit">
-            {profile?.notification_opt_in ? 'Unsubscribe' : 'Subscribe to alerts'}
-          </Button>
-        </form>
+        <NotificationToggle initialOptIn={profile?.notification_opt_in ?? false} />
       </section>
     </div>
   );
