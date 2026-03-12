@@ -26,6 +26,7 @@ export default function NotificationToggle({ initialOptIn }: { initialOptIn: boo
           : 'You are not subscribed to event alerts.'}
       </p>
       <Button
+        type="button"
         size="sm"
         variant="secondary"
         onClick={toggle}

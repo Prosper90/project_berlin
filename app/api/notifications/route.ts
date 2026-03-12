@@ -10,14 +10,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let body: { is_active?: boolean };
+  let is_active = false;
   try {
-    body = await request.json();
+    const text = await request.text();
+    if (text) {
+      const body = JSON.parse(text) as { is_active?: boolean };
+      is_active = body.is_active ?? false;
+    }
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
-
-  const is_active = body.is_active ?? false;
 
   // Upsert notification subscription in Supabase
   const { error } = await supabase
