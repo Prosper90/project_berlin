@@ -115,7 +115,7 @@ export default function AdminEventsTable({ initialEvents, adminEmail }: AdminEve
                 <td className="px-4 py-3 text-right">
                   <div className="flex items-center justify-end gap-2">
                     <Link
-                      href={`/dashboard/events/${event.id}/edit`}
+                      href={`/superadmin/events/${event.id}/edit?admin=${adminEmail}`}
                       className="rounded px-2 py-1 text-xs text-muted hover:bg-surface hover:text-white transition-colors"
                     >
                       Edit
