@@ -6,6 +6,7 @@ import Link from "next/link";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
 import MultiSelect from "@/components/ui/MultiSelect";
+import ImageUpload from "@/components/ui/ImageUpload";
 import Button from "@/components/ui/Button";
 import { EventFormData, EventType } from "@/types";
 
@@ -265,12 +266,9 @@ export default function EventForm({ initialData, eventId, defaultCompany }: Even
             value={form.registration_url}
             onChange={(e) => set("registration_url", e.target.value)}
           />
-          <Input
-            label="Cover Image URL"
-            type="url"
-            placeholder="https://..."
-            value={form.cover_image_url}
-            onChange={(e) => set("cover_image_url", e.target.value)}
+          <ImageUpload
+            value={form.cover_image_url ?? ''}
+            onChange={(url) => set("cover_image_url", url)}
           />
         </div>
       </section>
