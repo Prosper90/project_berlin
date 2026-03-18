@@ -16,7 +16,7 @@ export default function AuthLayout({
               height="32"
               decoding="async"
               className="h-8 w-8 rounded object-cover"
-              src="/berlin_brnenburger.jpg"
+              src="/berlin_brnenburger.png"
             />
             <span className="font-mono text-xs font-bold tracking-tight text-white sm:text-base whitespace-nowrap">
               BLOCKCHAIN<span className="text-accent">_</span>EVENTS

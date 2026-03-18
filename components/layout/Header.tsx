@@ -31,7 +31,10 @@ export default function Header() {
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(e.target as Node)
+      ) {
         setProfileOpen(false);
       }
     };
@@ -52,16 +55,18 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
-
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0 leading-tight">
+        <Link
+          href="/"
+          className="flex items-center gap-2 shrink-0 leading-tight"
+        >
           <img
             alt="Brandenburg Gate"
             width="36"
             height="36"
             decoding="async"
             className="h-8 w-8 sm:h-9 sm:w-9 rounded object-cover"
-            src="/berlin_brnenburger.jpg"
+            src="/berlin_brnenburger.png"
           />
           <span className="font-mono text-xs font-bold tracking-tight text-white sm:text-base whitespace-nowrap">
             BLOCKCHAIN<span className="text-accent">_</span>EVENTS
@@ -70,11 +75,17 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 md:flex">
-          <Link href="/events" className="text-sm text-white transition-colors hover:text-accent">
+          <Link
+            href="/events"
+            className="text-sm text-white transition-colors hover:text-accent"
+          >
             Events
           </Link>
           {user && (
-            <Link href="/dashboard" className="text-sm text-white transition-colors hover:text-accent">
+            <Link
+              href="/dashboard"
+              className="text-sm text-white transition-colors hover:text-accent"
+            >
               Dashboard
             </Link>
           )}
@@ -100,7 +111,9 @@ export default function Header() {
                 {profileOpen && (
                   <div className="absolute right-0 top-10 w-48 rounded-lg border border-border bg-card shadow-xl z-50">
                     <div className="border-b border-border px-3 py-2">
-                      <p className="truncate text-xs text-muted">{user.email}</p>
+                      <p className="truncate text-xs text-muted">
+                        {user.email}
+                      </p>
                     </div>
                     <div className="py-1">
                       <Link
@@ -130,7 +143,9 @@ export default function Header() {
           ) : (
             <>
               <Link href="/subscribe">
-                <Button size="sm" variant="ghost">Create an event alert</Button>
+                <Button size="sm" variant="ghost">
+                  Create an event alert
+                </Button>
               </Link>
               <Link href="/login?redirectTo=/dashboard/events/new">
                 <Button size="sm">Post an Event</Button>
@@ -145,9 +160,15 @@ export default function Header() {
           onClick={() => setMenuOpen((o) => !o)}
           aria-label="Toggle menu"
         >
-          <span className={`block h-0.5 w-5 bg-white transition-transform duration-200 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-          <span className={`block h-0.5 w-5 bg-white transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`block h-0.5 w-5 bg-white transition-transform duration-200 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+          <span
+            className={`block h-0.5 w-5 bg-white transition-transform duration-200 ${menuOpen ? "translate-y-2 rotate-45" : ""}`}
+          />
+          <span
+            className={`block h-0.5 w-5 bg-white transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`}
+          />
+          <span
+            className={`block h-0.5 w-5 bg-white transition-transform duration-200 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`}
+          />
         </button>
       </div>
 
@@ -182,7 +203,9 @@ export default function Header() {
                   Settings
                 </Link>
                 <div className="mt-3 border-t border-border pt-3">
-                  <p className="px-3 pb-1 text-xs text-muted truncate">{user.email}</p>
+                  <p className="px-3 pb-1 text-xs text-muted truncate">
+                    {user.email}
+                  </p>
                   <button
                     type="button"
                     onClick={handleSignOut}
@@ -195,7 +218,11 @@ export default function Header() {
             ) : (
               <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3">
                 <Link href="/subscribe">
-                  <Button type="button" variant="ghost" className="w-full justify-start">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="w-full justify-start"
+                  >
                     Create an event alert
                   </Button>
                 </Link>
