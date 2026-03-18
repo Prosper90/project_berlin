@@ -1,26 +1,26 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import AdminEventsTable from '@/components/superadmin/AdminEventsTable';
 import type { Event } from '@/types';
 
 export const metadata: Metadata = { title: 'Admin' };
 
-function isAdmin(email: string | undefined): boolean {
+function isAdmin(email: string | null): boolean {
   if (!email) return false;
   const adminEmails = (process.env.ADMIN_EMAILS ?? '').split(',').map((e) => e.trim().toLowerCase());
   return adminEmails.includes(email.toLowerCase());
 }
 
-export default async function SuperAdminPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+type Props = { searchParams: Promise<{ admin?: string }> };
 
-  if (!user || !isAdmin(user.email)) redirect('/');
+export default async function SuperAdminPage({ searchParams }: Props) {
+  const { admin } = await searchParams;
 
-  const admin = createAdminClient();
-  const { data: events } = await admin
+  if (!isAdmin(admin ?? null)) redirect('/');
+
+  const db = createAdminClient();
+  const { data: events } = await db
     .from('events')
     .select('*')
     .order('event_date', { ascending: false });
@@ -45,7 +45,7 @@ export default async function SuperAdminPage() {
         </a>
       </div>
 
-      <AdminEventsTable initialEvents={(events ?? []) as Event[]} />
+      <AdminEventsTable initialEvents={(events ?? []) as Event[]} adminEmail={admin!} />
     </div>
   );
 }

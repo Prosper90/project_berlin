@@ -6,9 +6,10 @@ import type { Event } from '@/types';
 
 interface AdminEventsTableProps {
   initialEvents: Event[];
+  adminEmail: string;
 }
 
-export default function AdminEventsTable({ initialEvents }: AdminEventsTableProps) {
+export default function AdminEventsTable({ initialEvents, adminEmail }: AdminEventsTableProps) {
   const [events, setEvents] = useState<Event[]>(initialEvents);
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
@@ -16,7 +17,7 @@ export default function AdminEventsTable({ initialEvents }: AdminEventsTableProp
     setLoadingId(id);
     const res = await fetch(`/api/admin/events/${id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-admin-email': adminEmail },
       body: JSON.stringify(body),
     });
     const json = await res.json();
@@ -29,7 +30,10 @@ export default function AdminEventsTable({ initialEvents }: AdminEventsTableProp
   const deleteEvent = async (id: string, title: string) => {
     if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
     setLoadingId(id);
-    const res = await fetch(`/api/admin/events/${id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/admin/events/${id}`, {
+      method: 'DELETE',
+      headers: { 'x-admin-email': adminEmail },
+    });
     if (res.ok) {
       setEvents((prev) => prev.filter((e) => e.id !== id));
     }
