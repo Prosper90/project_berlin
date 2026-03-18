@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
-import Select from "@/components/ui/Select";
+import MultiSelect from "@/components/ui/MultiSelect";
 import Button from "@/components/ui/Button";
 import { EventFormData, EventType } from "@/types";
 
@@ -40,9 +40,10 @@ const EVENT_TYPE_OPTIONS = [
 interface EventFormProps {
   initialData?: Partial<EventFormData>;
   eventId?: string;
+  defaultCompany?: string;
 }
 
-export default function EventForm({ initialData, eventId }: EventFormProps) {
+export default function EventForm({ initialData, eventId, defaultCompany }: EventFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -53,8 +54,12 @@ export default function EventForm({ initialData, eventId }: EventFormProps) {
 
   const [form, setForm] = useState<EventFormData>({
     ...BLANK_FORM,
+    hosting_company: defaultCompany ?? '',
     ...initialData,
   });
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(
+    initialData?.event_types ?? (initialData?.event_type ? [initialData.event_type] : [])
+  );
 
   const set = (key: keyof EventFormData, value: string) =>
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -71,6 +76,8 @@ export default function EventForm({ initialData, eventId }: EventFormProps) {
         .split(",")
         .map((t) => t.trim())
         .filter(Boolean),
+      event_types: selectedTypes as EventType[],
+      event_type: selectedTypes[0] as EventType | undefined,
     };
 
     const url = eventId ? `/api/events/${eventId}` : "/api/events";
@@ -157,12 +164,11 @@ export default function EventForm({ initialData, eventId }: EventFormProps) {
             value={form.description}
             onChange={(e) => set("description", e.target.value)}
           />
-          <Select
+          <MultiSelect
             label="Event Type"
             options={EVENT_TYPE_OPTIONS}
-            placeholder="Select type..."
-            value={form.event_type ?? ""}
-            onChange={(e) => set("event_type", e.target.value as EventType)}
+            values={selectedTypes}
+            onChange={setSelectedTypes}
           />
           <Input
             label="Tags"

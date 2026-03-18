@@ -2,6 +2,11 @@ import Link from "next/link";
 import { Event } from "@/types";
 import { formatTime } from "@/lib/utils";
 
+function formatDate(dateStr: string) {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
 interface EventCardProps {
   event: Event;
 }
@@ -23,20 +28,38 @@ export default function EventCard({ event }: EventCardProps) {
 
   return (
     <Link href={`/events/${event.id}`} className="group block">
-      <article className="rounded-lg border border-border bg-card p-5 transition-all duration-200 hover:border-accent/50 hover:bg-surface/80">
+      <article className="rounded-lg border border-border bg-card overflow-hidden transition-all duration-200 hover:border-accent/50 hover:bg-surface/80">
+        <div className="flex">
+        {event.cover_image_url && (
+          <div className="w-32 shrink-0 sm:w-40 overflow-hidden">
+            <img
+              src={event.cover_image_url}
+              alt={event.title}
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        )}
+        <div className="flex-1 p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
-            {event.event_type && (
-              <span
-                className={`inline-block rounded border px-2 py-0.5 text-xs font-mono uppercase tracking-wider mb-2 ${typeColor}`}
-              >
-                {event.event_type}
-              </span>
-            )}
+            <div className="flex flex-wrap items-center gap-2 mb-2">
+              {event.event_type && (
+                <span
+                  className={`inline-block rounded border px-2 py-0.5 text-xs font-mono uppercase tracking-wider ${typeColor}`}
+                >
+                  {event.event_type}
+                </span>
+              )}
+              {event.event_date && (
+                <span className="text-xs font-medium text-accent">
+                  {formatDate(event.event_date)}
+                </span>
+              )}
+            </div>
             <h3 className="text-base font-semibold text-white group-hover:text-accent transition-colors line-clamp-2">
               {event.title}
             </h3>
-            <p className="mt-1 text-sm font-medium text-accent">
+            <p className="mt-1 text-sm font-medium text-muted">
               {event.hosting_company}
             </p>
 
@@ -88,6 +111,8 @@ export default function EventCard({ event }: EventCardProps) {
             ))}
           </div>
         )}
+        </div>
+        </div>
       </article>
     </Link>
   );

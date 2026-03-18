@@ -45,14 +45,13 @@ export async function POST(request: NextRequest) {
     await resend.emails.send({
       from: FROM_EMAIL,
       to: user.email!,
-      subject: 'You\'re subscribed to Berlin Blockchain Events',
+      subject: 'You\'re subscribed to Berlin Blockchain Events alerts',
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:0 auto">
-          <h2 style="color:#10b981">You're in!</h2>
-          <p>You'll now receive email alerts whenever a new blockchain event is posted in Berlin.</p>
-          <p style="color:#666;font-size:0.85rem">
-            To unsubscribe at any time, visit your
-            <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="color:#10b981">dashboard</a>.
+          <h2 style="color:#00ff85">You are now subscribed to event alerts.</h2>
+          <p>You will get emails when exciting blockchain events pop up in Berlin.</p>
+          <p>Remember that you can unsubscribe anytime by visiting your
+            <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="color:#00ff85">dashboard</a>.
           </p>
         </div>
       `,

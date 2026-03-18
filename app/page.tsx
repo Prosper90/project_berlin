@@ -10,7 +10,12 @@ import NetworkBackground from "@/components/external/NetworkBackground";
 export default async function HomePage() {
   const supabase = await createClient();
 
-  const [{ data: upcomingEvents }, { data: { user } }] = await Promise.all([
+  const [
+    { data: upcomingEvents },
+    {
+      data: { user },
+    },
+  ] = await Promise.all([
     supabase
       .from("events")
       .select("*")
@@ -21,7 +26,9 @@ export default async function HomePage() {
     supabase.auth.getUser(),
   ]);
 
-  const postEventUrl = user ? "/dashboard/events/new" : "/signup";
+  const postEventUrl = user
+    ? "/dashboard/events/new"
+    : "/login?redirectTo=/dashboard/events/new";
 
   return (
     <>
@@ -35,7 +42,7 @@ export default async function HomePage() {
           <NetworkBackground />
           <div className="relative z-10 mx-auto max-w-4xl text-center">
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-accent">
-              Berlin &bull; Blockchain &bull; Web3
+              Berlin &bull; Blockchain &bull; Events
             </p>
             <h1 className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl">
               The event board for
@@ -89,7 +96,7 @@ export default async function HomePage() {
               community.
             </p>
             <Link href={postEventUrl} className="mt-6 inline-block">
-              <Button size="lg">{user ? "Post an Event" : "Get Started — It's Free"}</Button>
+              <Button size="lg">Get Started</Button>
             </Link>
           </div>
         </section>

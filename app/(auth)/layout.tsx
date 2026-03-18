@@ -11,28 +11,17 @@ export default function AuthLayout({
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <img
-              alt="Jobited bear"
+              alt="Brandenburg Gate"
               width="32"
               height="32"
               decoding="async"
-              className="h-8 w-8"
-              src="/jobited-bear.svg"
+              className="h-8 w-8 rounded object-cover"
+              src="/berlin_brnenburger.jpg"
             />
             <span className="font-mono text-xs font-bold tracking-tight text-white sm:text-base whitespace-nowrap">
-              BERLIN<span className="text-accent">_</span>BLOCKCHAIN
+              BLOCKCHAIN<span className="text-accent">_</span>EVENTS
             </span>
           </Link>
-          <span className="hidden text-[10px] text-muted sm:inline-block">
-            powered by{" "}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-white hover:underline"
-              href="https://jobited.com"
-            >
-              Jobited
-            </a>
-          </span>
         </div>
       </header>
       <main className="flex flex-1 items-center justify-center px-4 py-12">
