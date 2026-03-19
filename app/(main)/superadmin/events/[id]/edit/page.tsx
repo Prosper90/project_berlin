@@ -58,7 +58,7 @@ export default async function AdminEditEventPage({ params, searchParams }: Props
       </div>
       <h1 className="mb-8 text-2xl font-bold text-white">Edit Event</h1>
       <div className="rounded-xl border border-border bg-surface p-8">
-        <EventForm initialData={initialData} eventId={id} />
+        <EventForm initialData={initialData} eventId={id} adminEmail={admin} />
       </div>
     </div>
   );

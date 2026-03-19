@@ -42,9 +42,10 @@ interface EventFormProps {
   initialData?: Partial<EventFormData>;
   eventId?: string;
   defaultCompany?: string;
+  adminEmail?: string;
 }
 
-export default function EventForm({ initialData, eventId, defaultCompany }: EventFormProps) {
+export default function EventForm({ initialData, eventId, defaultCompany, adminEmail }: EventFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -81,12 +82,18 @@ export default function EventForm({ initialData, eventId, defaultCompany }: Even
       event_type: selectedTypes[0] as EventType | undefined,
     };
 
-    const url = eventId ? `/api/events/${eventId}` : "/api/events";
+    const isAdmin = !!adminEmail && !!eventId;
+    const url = isAdmin
+      ? `/api/admin/events/${eventId}`
+      : eventId ? `/api/events/${eventId}` : "/api/events";
     const method = eventId ? "PATCH" : "POST";
 
     const res = await fetch(url, {
       method,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(isAdmin ? { "x-admin-email": adminEmail } : {}),
+      },
       body: JSON.stringify(payload),
     });
 
