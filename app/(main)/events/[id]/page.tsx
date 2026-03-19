@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { formatDate, formatTime } from '@/lib/utils';
+import { renderDescription } from '@/lib/renderDescription';
 import Button from '@/components/ui/Button';
 import { Event } from '@/types';
 
@@ -53,7 +54,10 @@ export default async function EventDetailPage({ params }: Props) {
         <p className="mt-2 text-lg font-medium text-accent">{e.hosting_company}</p>
 
         {e.description && (
-          <p className="mt-5 text-base leading-relaxed text-muted">{e.description}</p>
+          <div
+            className="event-description mt-5 text-base leading-relaxed text-muted"
+            dangerouslySetInnerHTML={{ __html: renderDescription(e.description) }}
+          />
         )}
 
         {/* Details grid */}

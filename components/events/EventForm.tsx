@@ -171,6 +171,8 @@ export default function EventForm({ initialData, eventId, defaultCompany, adminE
             placeholder="What is this event about?"
             value={form.description}
             onChange={(e) => set("description", e.target.value)}
+            rows={10}
+            hint="Add links using: [link text](https://url.com) — they'll appear clickable in green for viewers"
           />
           <MultiSelect
             label="Event Type"

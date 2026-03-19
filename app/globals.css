@@ -45,6 +45,26 @@
 /* ─────────────────────────────────────────
    Base
 ───────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   Event description rendered links
+───────────────────────────────────────── */
+.desc-link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s;
+}
+.desc-link:hover {
+  opacity: 0.8;
+}
+
+.event-description p {
+  margin-top: 0.75rem;
+}
+.event-description p:first-child {
+  margin-top: 0;
+}
+
 @layer base {
   html {
     background-color: var(--color-bg);
