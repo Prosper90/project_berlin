@@ -39,10 +39,10 @@ export default function EventCard({ event }: EventCardProps) {
 
   return (
     <Link href={`/events/${event.id}`} className="group block">
-      <article className="rounded-lg border border-border bg-card overflow-hidden transition-all duration-200 hover:border-accent/50 hover:bg-surface/80">
-        <div className="flex">
+      <article className="h-44 rounded-lg border border-border bg-card overflow-hidden transition-all duration-200 hover:border-accent/50 hover:bg-surface/80">
+        <div className="flex h-full">
         {event.cover_image_url && (
-          <div className="w-32 shrink-0 sm:w-40 overflow-hidden">
+          <div className="w-32 shrink-0 sm:w-40 h-full overflow-hidden">
             <img
               src={event.cover_image_url}
               alt={event.title}
@@ -50,7 +50,7 @@ export default function EventCard({ event }: EventCardProps) {
             />
           </div>
         )}
-        <div className="flex-1 p-5">
+        <div className="flex-1 p-4 overflow-hidden flex flex-col justify-between">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -67,16 +67,16 @@ export default function EventCard({ event }: EventCardProps) {
                 </span>
               )}
             </div>
-            <h3 className="text-base font-semibold text-white group-hover:text-accent transition-colors line-clamp-2">
+            <h3 className="text-sm font-semibold text-white group-hover:text-accent transition-colors line-clamp-1">
               {event.title}
             </h3>
-            <p className="mt-1 text-sm font-medium text-muted">
+            <p className="mt-0.5 text-xs font-medium text-muted truncate">
               {event.hosting_company}
             </p>
 
             {event.description && (
-              <p className="mt-2 text-sm text-muted line-clamp-2">
-                {event.description}
+              <p className="mt-1 text-xs text-muted line-clamp-1">
+                {event.description.replace(/<[^>]*>/g, '')}
               </p>
             )}
           </div>
@@ -88,7 +88,7 @@ export default function EventCard({ event }: EventCardProps) {
           )}
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-muted">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
           {(event.start_time || event.end_time) && (
             <span className="flex items-center gap-1">
               <ClockIcon />
@@ -97,7 +97,7 @@ export default function EventCard({ event }: EventCardProps) {
             </span>
           )}
           {event.venue_name && (
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-1 truncate max-w-[140px]">
               <PinIcon />
               {event.venue_name}
             </span>
@@ -111,11 +111,11 @@ export default function EventCard({ event }: EventCardProps) {
         </div>
 
         {event.tags && event.tags.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {event.tags.slice(0, 4).map((tag) => (
+          <div className="flex flex-wrap gap-1">
+            {event.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-border/50 px-2.5 py-0.5 text-xs text-muted"
+                className="rounded-full bg-border/50 px-2 py-0.5 text-xs text-muted"
               >
                 {tag}
               </span>
