@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { formatDate, formatTime } from '@/lib/utils';
 import { renderDescription } from '@/lib/renderDescription';
 import Button from '@/components/ui/Button';
+import EventMap from '@/components/ui/EventMap';
 import { Event } from '@/types';
 
 type Props = { params: Promise<{ id: string }> };
@@ -87,6 +88,20 @@ export default async function EventDetailPage({ params }: Props) {
             </div>
           )}
         </div>
+
+        {/* Map */}
+        {(e.latitude || e.venue_address || e.venue_name) && (
+          <div className="mt-6">
+            <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted">Location</p>
+            <EventMap
+              latitude={e.latitude}
+              longitude={e.longitude}
+              venueName={e.venue_name}
+              venueAddress={e.venue_address}
+              city={e.city}
+            />
+          </div>
+        )}
 
         {/* Actions */}
         <div className="mt-6 flex flex-wrap gap-3">

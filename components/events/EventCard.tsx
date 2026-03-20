@@ -22,9 +22,20 @@ const EVENT_TYPE_COLORS: Record<string, string> = {
   other: "border-muted text-muted",
 };
 
+function staticMapUrl(event: Event): string | null {
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  if (!apiKey) return null;
+  const q = event.latitude && event.longitude
+    ? `${event.latitude},${event.longitude}`
+    : encodeURIComponent([event.venue_name, event.venue_address, event.city].filter(Boolean).join(', '));
+  if (!q) return null;
+  return `https://maps.googleapis.com/maps/api/staticmap?center=${q}&zoom=14&size=160x160&scale=2&markers=color:0x10b981|${q}&style=element:geometry|color:0x1a2320&style=element:labels.text.stroke|color:0x0f1410&style=element:labels.text.fill|color:0x9ca3af&key=${apiKey}`;
+}
+
 export default function EventCard({ event }: EventCardProps) {
   const typeColor =
     EVENT_TYPE_COLORS[event.event_type ?? "other"] ?? EVENT_TYPE_COLORS.other;
+  const mapUrl = staticMapUrl(event);
 
   return (
     <Link href={`/events/${event.id}`} className="group block">
@@ -112,6 +123,18 @@ export default function EventCard({ event }: EventCardProps) {
           </div>
         )}
         </div>
+
+        {/* Static map thumbnail on the right */}
+        {mapUrl && (
+          <div className="hidden sm:block w-24 shrink-0 overflow-hidden border-l border-border">
+            <img
+              src={mapUrl}
+              alt="Map"
+              className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+            />
+          </div>
+        )}
+
         </div>
       </article>
     </Link>

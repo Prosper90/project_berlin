@@ -50,6 +50,8 @@ export interface Event {
   website_url?: string;
   registration_url?: string;
   cover_image_url?: string;
+  latitude?: number;
+  longitude?: number;
   source: EventSource;
   source_url?: string;
   external_id?: string;
@@ -114,6 +116,8 @@ export interface EventFormData {
   website_url?: string;
   registration_url?: string;
   cover_image_url?: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface ProfileFormData {

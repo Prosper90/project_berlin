@@ -7,6 +7,7 @@ import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
 import MultiSelect from "@/components/ui/MultiSelect";
 import ImageUpload from "@/components/ui/ImageUpload";
+import AddressAutocomplete from "@/components/ui/AddressAutocomplete";
 import Button from "@/components/ui/Button";
 import { EventFormData, EventType } from "@/types";
 
@@ -59,6 +60,10 @@ export default function EventForm({ initialData, eventId, defaultCompany, adminE
     hosting_company: defaultCompany ?? '',
     ...initialData,
   });
+  const [coords, setCoords] = useState<{ latitude?: number; longitude?: number }>({
+    latitude: initialData?.latitude,
+    longitude: initialData?.longitude,
+  });
   const [selectedTypes, setSelectedTypes] = useState<string[]>(
     initialData?.event_types ?? (initialData?.event_type ? [initialData.event_type] : [])
   );
@@ -80,6 +85,7 @@ export default function EventForm({ initialData, eventId, defaultCompany, adminE
         .filter(Boolean),
       event_types: selectedTypes as EventType[],
       event_type: selectedTypes[0] as EventType | undefined,
+      ...coords,
     };
 
     const isAdmin = !!adminEmail && !!eventId;
@@ -222,17 +228,26 @@ export default function EventForm({ initialData, eventId, defaultCompany, adminE
           Location
         </h2>
         <div className="flex flex-col gap-4">
+          <AddressAutocomplete
+            label="Search Venue / Address"
+            placeholder="Start typing a venue name or address…"
+            value={form.venue_address ?? ''}
+            onChange={(val) => set("venue_address", val)}
+            onPlaceSelect={(place) => {
+              setForm((prev) => ({
+                ...prev,
+                venue_name: place.venue_name || prev.venue_name || '',
+                venue_address: place.venue_address,
+                city: place.city,
+              }));
+              setCoords({ latitude: place.latitude, longitude: place.longitude });
+            }}
+          />
           <Input
             label="Venue Name"
             placeholder="e.g. Factory Berlin"
             value={form.venue_name}
             onChange={(e) => set("venue_name", e.target.value)}
-          />
-          <Input
-            label="Venue Address"
-            placeholder="e.g. Rheinsberger Str. 76-77"
-            value={form.venue_address}
-            onChange={(e) => set("venue_address", e.target.value)}
           />
           <Input
             label="City"
