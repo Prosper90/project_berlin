@@ -39,7 +39,7 @@ export default function EventCard({ event }: EventCardProps) {
 
   return (
     <Link href={`/events/${event.id}`} className="group block">
-      <article className="h-44 rounded-lg border border-border bg-card overflow-hidden transition-all duration-200 hover:border-accent/50 hover:bg-surface/80">
+      <article className="h-52 rounded-lg border border-border bg-card overflow-hidden transition-all duration-200 hover:border-accent/50 hover:bg-surface/80">
         <div className="flex h-full">
         {event.cover_image_url && (
           <div className="w-32 shrink-0 sm:w-40 h-full overflow-hidden">
@@ -75,7 +75,7 @@ export default function EventCard({ event }: EventCardProps) {
             </p>
 
             {event.description && (
-              <p className="mt-1 text-xs text-muted line-clamp-1">
+              <p className="mt-1 text-xs text-muted line-clamp-2">
                 {event.description.replace(/<[^>]*>/g, '')}
               </p>
             )}
@@ -126,7 +126,7 @@ export default function EventCard({ event }: EventCardProps) {
 
         {/* Static map thumbnail on the right */}
         {mapUrl && (
-          <div className="hidden sm:block w-24 shrink-0 overflow-hidden border-l border-border">
+          <div className="hidden sm:block w-36 shrink-0 overflow-hidden border-l border-border">
             <img
               src={mapUrl}
               alt="Map"
